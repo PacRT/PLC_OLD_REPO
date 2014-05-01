@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html id="ng-app" ng-app="app"> <!-- id="ng-app" IE<8 -->
+
+<head>
+    <!-- <title></title> -->
+    <title>NG Uplaod</title>
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Fix for old browsers -->
+    <script src="es5-shim/es5-shim.js"></script>
+    <script src="jquery/jquery.js"></script>
+
+    <script src="pdfjs/build/pdf.js"></script>
+    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="angular/angular.js"></script>
+    <script src="angular-route/angular-route.min.js"></script>
+    <!--<script src="http://code.angularjs.org/1.1.5/angular.min.js"></script> -->
+    <script src="angular-file-upload.js"></script>
+    <script src="controllers.js"></script>
+    <script src="directives.js"></script>
+
+    <style>
+        .my-drop-zone { border: dotted 3px lightgray; }
+        .ng-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+        .another-file-over-class { border: dotted 3px green; }
+
+        html, body { height: 100%; }
+
+        canvas {
+            background-color: #f3f3f3;
+            -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+            -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+            box-shadow: 3px 3px 3px 0 #e3e3e3;
+            border: 1px solid #c3c3c3;
+            height: 100px;
+            margin: 6px 0 0 6px;
+        }
+    </style>
+
+</head>
+
+<!-- 1. ng-file-drop | ng-file-drop="options" -->
+<body>
+
+<div class="container" ng-controller="TestController" ng-file-drop>
+
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">The Club</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demos <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../simple">Simple example</a></li>
+                        <li class="active"><a href="#">Uploads only images (with canvas preview)</a></li>
+                        <li><a href="../without-bootstrap">Without bootstrap example</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/nervgh/angular-file-upload">About The Club</a></li>
+                <li><a href="https://github.com/nervgh/angular-file-upload">Invite Friends</a></li>
+                <li><a href="https://github.com/nervgh/angular-file-upload">Developers' Zone</a></li>
+                <!-- <li><a href="https://github.com/nervgh/angular-file-upload">View on Github</a></li> -->
+                <!-- <li><a href="https://raw.github.com/nervgh/angular-file-upload/master/angular-file-upload.min.js">Download</a></li> -->
+                <form class="navbar-form navbar-left" action="/login" method="post" ng-show="'<%=user%>' == 'undefined'">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-link">Log In</button>
+                </form>
+                <li ng-show="{{'<%=user%>' != 'undefined'}}"><a>Welcome {Name}</a></li>
+                <li ng-show="'<%=user%>' != 'undefined'"><a href="/logout">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-view></div>
+
+</div>
+
+</body>
+</html>

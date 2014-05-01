@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Index</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Index</h1>
+    <p>Welcome to Index</p>
+
+
+    <h1>Tiny Uploader</h1>
+    <p>Save an Image to the Server</p>
+    <input id="input-files" type="file" name="files[]" data-url="/upload" multiple="multiple"/>
+    <button id="send-file" onclick="javascript:sendFile();">Send</button>
+    <button id="save-file" onclick="javascript:saveFile();">Save</button>
+    <button id="save-file" onclick="javascript:testStream();">TestStream</button>
+
+    <form action="/upload/" enctype="multipart/form-data" method="post">
+        <input id="input-files" type="file" name="file"/>
+        <input type="submit" name="store" value="Store"/>
+    </form>
+
+    <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
+    <script>$('#fileupload').fileupload({ dataType: 'json' })</script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/uploader.js"></script>
+  </body>
+</html>
