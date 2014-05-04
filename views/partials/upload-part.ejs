@@ -6,7 +6,7 @@
 
         <div ng-show="uploader.isHTML5">
             <!-- 3. ng-file-over | ng-file-over="className" -->
-            <div class="well my-drop-zone" ng-file-over>
+            <div class="well my-drop-zone" ng-file-drop="{ url: '/upload/' }" ng-file-over>
                 Base drop zone
             </div>
 
@@ -22,9 +22,11 @@
     </div>
 
     <div class="col-md-9" style="margin-bottom: 40px">
-        <h2>Uploads only images (with canvas preview)</h2>
-        <h3>The queue</h3>
-        <p>Queue length: {{ uploader.queue.length }}</p>
+        <span style="color: silver; font-style: italic">
+            <h2>Drag and drop PDFs or images</h2>
+            <h4>The queue</h4>
+            <p>Queue length: {{ uploader.queue.length }}</p>
+        </span>
 
         <table class="table">
             <thead>

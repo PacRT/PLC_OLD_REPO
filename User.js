@@ -12,12 +12,13 @@
     console.log("Error " + err);
   });
 
-  exports.registerUser = function(username, password) {
+  exports.registerUser = function(username, password, email) {
     var uid;
     uid = client.incr("global:nextUserId");
     client.set("uid:" + uid + ":username", username);
     client.set("uid:" + uid + ":password", password);
     client.set("username:" + username + ":uid", uid);
+    client.set("uid:" + uid + ":email", email);
   };
 
   lua_find_by_id = "\n  -- KEYS[1] is the supplied UID here \n  local username = redis.call('GET', \"uid:\" ..KEYS[1].. \":username\")\n  local password = redis.call('GET', \"uid:\" ..KEYS[1].. \":password\")\n  local email = redis.call('GET', \"uid:\" ..KEYS[1].. \":email\")\n  print(KEYS[1] ..\"|\".. username ..\"|\".. password ..\"|\".. email)\n  return KEYS[1] ..\"|\".. username ..\"|\".. password ..\"|\".. email\n  ";

@@ -26,6 +26,11 @@ angular
                 controller  : 'TestController'
             })
 
+            .when('/about', {
+                templateUrl : 'partials/about',
+                controller  : 'TestController'
+            })
+
     })
 
     .controller('aboutController', function($scope) {

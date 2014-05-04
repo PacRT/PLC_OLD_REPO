@@ -1,3 +1,20 @@
+findById = (id, fn) ->
+  idx = id - 1
+  if users[idx]
+    fn null, users[idx]
+  else
+    fn new Error("User " + id + " does not exist")
+  return
+findByUsername = (username, fn) ->
+  i = 0
+  len = users.length
+
+  while i < len
+    user = users[i]
+    return fn(null, user)  if user.username is username
+    i++
+  fn null, null
+
 ensureAuthenticated = (req, res, next) ->
   return next()  if req.isAuthenticated()
   req.session.returnTo = req.path #This is t redirect the page to original requester after log-in
@@ -9,7 +26,20 @@ LocalStrategy = require("passport-local").Strategy
 routes = require "./routes"
 ops = require "./routes/ops"
 User = require "./User"
-
+users = [
+  {
+    id: 1
+    username: "bob"
+    password: "secret"
+    email: "bob@example.com"
+  }
+  {
+    id: 2
+    username: "joe"
+    password: "birthday"
+    email: "joe@example.com"
+  }
+]
 passport.serializeUser (user, done) ->
   done null, user.id
   return
@@ -100,20 +130,6 @@ app.get "/landing", (req, res) ->
 
 app.get "/partials/landing", (req, res) ->
   res.render "partials/landing",
-    user: req.user
-    message: req.session.messages
-
-  return
-
-app.get "/about", (req, res) ->
-  res.render "partials/about",
-    user: req.user
-    message: req.session.messages
-
-  return
-
-app.get "/partials/about", (req, res) ->
-  res.render "partials/about",
     user: req.user
     message: req.session.messages
 

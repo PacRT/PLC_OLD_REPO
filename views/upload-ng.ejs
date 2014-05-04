@@ -88,8 +88,8 @@
 
             <div ng-show="uploader.isHTML5">
                 <!-- 3. ng-file-over | ng-file-over="className" -->
-                <div class="well my-drop-zone" ng-file-over>
-                    Base drop zone
+                <div class="well my-drop-zone" ng-file-over="another-file-over-class" ng-file-drop="{ url: '/upload/' }">
+                    Base drop
                 </div>
 
                 <!-- Example: ng-file-drop | ng-file-drop="options" -->
@@ -104,7 +104,7 @@
         </div>
 
         <div class="col-md-9" style="margin-bottom: 40px">
-            <h2>Uploads only images (with canvas preview)</h2>
+            <h2>Drag and drop PDFs or images OR use the traditonal Browse button at the left side - you can select multiple files</h2>
             <h3>The queue</h3>
             <p>Queue length: {{ uploader.queue.length }}</p>
 

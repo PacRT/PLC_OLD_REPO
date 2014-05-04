@@ -10,11 +10,12 @@ client.on "error", (err) ->
   console.log "Error " + err
   return
 
-exports.registerUser = (username, password) ->
+exports.registerUser = (username, password, email) ->
   uid = client.incr "global:nextUserId"
   client.set "uid:#{uid}:username", username
   client.set "uid:#{uid}:password", password
   client.set "username:#{username}:uid", uid
+  client.set "uid:#{uid}:email", email
   return
 
 lua_find_by_id = "\n
