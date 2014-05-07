@@ -17,18 +17,32 @@ exports.upload = (req, res, err) ->
         param = req.route.params[0]
         uploadEndpoint = "http://" + weedRes.publicUrl + "/" + ((if (param is "") then weedRes.fid else param))
         console.log "Upload Endpoint: " + uploadEndpoint
-        fileupload req, res, uploadEndpoint
+        fileupload req, res, uploadEndpoint, dbentry
       else
         console.log "error: " + error
         res.send "{" + error + "}"
 
-fileupload = (req, res, uploadEndpoint) ->
+dbentry = (req) ->
+  console.log "DB Entry function has been called"
+  console.log "DB Entry::: username = #{req.user.username}"
+  console.log "DB Entry::: id = #{req.user.id}"
+
+
+fileupload = (req, res, uploadEndpoint, fn) ->
   req.connection.setTimeout 10000
   poster = request.post(uploadEndpoint, (err, response, body) ->
-    console.log err + ":" + response.statusCode + ":" + body
-    jsonbody = JSON.parse(body)
-    console.log "jsonbody: " + JSON.stringify(jsonbody)
-    console.log "Error ofcourse"  if jsonbody.error isnt `undefined` 
+    unless err
+      console.log err + ":" + response.statusCode + ":" + body
+      jsonbody = JSON.parse(body)
+      console.log "jsonbody: " + JSON.stringify(jsonbody)
+      console.log "Error ofcourse"  if jsonbody.error isnt `undefined`
+      unless jsonbody.error
+        console.log "Ready to call a function here"
+        unless fn == 'undefined'
+          fn(req)
+    else
+      console.log "Error ::: #{err}"
+      return
   )
   #form = poster.form()
   #form.append("file", req.file)

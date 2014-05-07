@@ -1,0 +1,38 @@
+incr global:getNextUserId
+set uid:4:username bob
+set username:bob:uid 4
+set uid:4:email ch@ch.com
+set uid:4:password secret
+
+
+// Linking documents to the user
+// Find all the documents linked to a user
+uid:<uid>:documents
+add the above as sorted set ID and add document locator with timestamp. Preferably don't use redis 'TIME' command and LUA
+script would not allow this to be performed before a write operation.
+
+>> ZADD owner.uid:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
+>> ZADD issuer.uid:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
+
+
+// Find user by documentlocator/ID
+// Store it in a hash - good choice? I don't know yet :)
+>> HMSET docurl_uid <docurl> <owner_uid:issuer_uid> [<docurl> <owner_uid:issuer_uid>]*
+
+to get the user by docurl
+
+>> HGET docurl_uid <docurl>
+
+Another way of storing it - to get all docurl as full-fledged redis key. Better? I think so
+
+>> HMSET doc:<docurl> owner.uid <owner uid> issuer.uid <issuer uid> type <type> ... JSON <JSON representation of document>
+digest <digestURL>
+//All fields other than owner.uid are optional
+
+Permission matrix for documents
+
+How do I forward a document? Mailbox?
+
+// Mailbox as simple key-value ?
+mb:uid:<uid>:docurl:<docurl> <permission X> // X=0 =cant forward, X=1 =can forward, X=2 =recipients can forward too
+// Also set expiration date-time
