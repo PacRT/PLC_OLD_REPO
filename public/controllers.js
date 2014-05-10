@@ -31,6 +31,11 @@ angular
                 controller  : 'TestController'
             })
 
+            .when('/dashboard', {
+                templateUrl : 'partials/dashboard',
+                controller  : 'TestController'
+            })
+
     })
 
     .controller('aboutController', function($scope) {

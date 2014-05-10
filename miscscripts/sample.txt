@@ -1,0 +1,2 @@
+I am Samle text file
+This is second line of sample.txt

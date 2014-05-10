@@ -138,6 +138,13 @@
     });
   });
 
+  app.get("/dashboard", ensureAuthenticated, function(req, res) {
+    res.render("partials/dashboard", {
+      user: req.user,
+      message: req.session.messages
+    });
+  });
+
   app.get("/partials/:filename", ensureAuthenticated, function(req, res) {
     var filename;
     filename = req.params.filename;
@@ -147,12 +154,6 @@
     res.render("partials/" + filename, {
       user: req.user,
       message: req.session.message
-    });
-  });
-
-  app.get("/ngupload", ensureAuthenticated, function(req, res) {
-    return res.render("upload-ng", {
-      user: req.user
     });
   });
 

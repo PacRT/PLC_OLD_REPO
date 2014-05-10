@@ -86,8 +86,8 @@ angular
                         PDFJS.getDocument(dataUrl).then(function(pdf) {
                             pdf.getPage(1).then(function(page) {
                                 var viewport = page.getViewport(0.5);
-                                var width = params.width || this.width / this.height * params.height;
-                                var height = params.height || this.height / this.width * params.width;
+                                var width = params.width;// || this.width / this.height * params.height;
+                                var height = params.height;// || this.height / this.width * params.width;
                                 var context = canvas[0].getContext('2d')
                                 canvas.attr({ width: width, height: height });
                                 var renderContext = {

@@ -119,6 +119,13 @@ app.get "/partials/about", (req, res) ->
 
   return
 
+app.get "/dashboard", ensureAuthenticated, (req, res) ->
+  res.render "partials/dashboard",
+    user: req.user
+    message: req.session.messages
+
+  return
+
 app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
   filename = req.params.filename
   return unless filename # might want to change this
@@ -128,24 +135,7 @@ app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
 
   return
 
-app.get "/ngupload", ensureAuthenticated, (req, res) ->
-  res.render "upload-ng",
-    user: req.user
-
-#app.get "/main", ensureAuthenticated, (req, res) ->
-#  res.render "main",
-#    user: req.user
-#
-#  return
-
 app.all "/upload/**", ensureAuthenticated, ops.upload
-
-#app.get "/login", (req, res) ->
-#  res.render "partials/login",
-#    user: req.user
-#    message: req.session.messages
-#
-#  return
 
 app.post "/login", (req, res, next) ->
   passport.authenticate("local", (err, user, info) ->

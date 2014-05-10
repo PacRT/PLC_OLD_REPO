@@ -4,10 +4,18 @@ FormData = require("form-data")
 weedMaster = "http://50.185.122.11:9333"
 
 util = require "util"
+redis = require("redis")
+client = redis.createClient()
+
+reader = require "./filereader"
+
+FileData = reader.FileData
+
+filedata = new FileData("./miscscripts/doclink.lua", "ascii")
 
 exports.upload = (req, res, err) ->
   if req.method is "GET"
-    request weedMaster + "/dir/assign", (error, response, body) ->
+    request "#{weedMaster}/dir/assign", (error, response, body) ->
       weedRes = JSON.parse(body)
       res.send weedRes
   else if req.method is "POST"
@@ -15,18 +23,24 @@ exports.upload = (req, res, err) ->
       unless error
         weedRes = JSON.parse(body)
         param = req.route.params[0]
-        uploadEndpoint = "http://" + weedRes.publicUrl + "/" + ((if (param is "") then weedRes.fid else param))
-        console.log "Upload Endpoint: " + uploadEndpoint
+        uploadEndpoint = "http://#{weedRes.publicUrl}/#{((if (param is "") then weedRes.fid else param))}"
+        console.log "Upload Endpoint: #{uploadEndpoint}"
         fileupload req, res, uploadEndpoint, dbentry
       else
         console.log "error: " + error
         res.send "{" + error + "}"
 
 dbentry = (req) ->
-  console.log "DB Entry function has been called"
-  console.log "DB Entry::: username = #{req.user.username}"
-  console.log "DB Entry::: id = #{req.user.id}"
-
+  filedata.getData( (err, data) ->
+    unless err
+      console.log "Data: #{data}"
+      client.eval data, 2, "#{req.user.id}", "#{req.user.id}", "#{new Date().getTime()}", "#{req.docurl}", (error, resp) ->
+        unless error
+          console.log "Response: #{resp}"
+        else
+          console.log "Error: #{error}"
+    else throw new Error("Problem executing the code data")
+  )
 
 fileupload = (req, res, uploadEndpoint, fn) ->
   req.connection.setTimeout 10000
@@ -39,6 +53,7 @@ fileupload = (req, res, uploadEndpoint, fn) ->
       unless jsonbody.error
         console.log "Ready to call a function here"
         unless fn == 'undefined'
+          req.docurl = uploadEndpoint
           fn(req)
     else
       console.log "Error ::: #{err}"

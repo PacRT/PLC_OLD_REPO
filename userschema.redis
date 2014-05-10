@@ -11,8 +11,8 @@ uid:<uid>:documents
 add the above as sorted set ID and add document locator with timestamp. Preferably don't use redis 'TIME' command and LUA
 script would not allow this to be performed before a write operation.
 
->> ZADD owner.uid:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
->> ZADD issuer.uid:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
+>> ZADD owner:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
+>> ZADD issuer:<uid>:docs <non-redis-timestamp> <documentLocator> [<non-redis-timestamp> <documentLocator>]*
 
 
 // Find user by documentlocator/ID
