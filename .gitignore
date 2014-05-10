@@ -2,3 +2,4 @@
 bower_*
 node_modules/
 *.map
+dump.rdb
