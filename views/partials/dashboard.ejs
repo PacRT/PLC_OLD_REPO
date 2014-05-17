@@ -1,11 +1,10 @@
-<div class="col-md-9" style="margin-bottom: 40px; color: silver; font-style: italic">
-    <h2>Dashboard </h2>
-    <h2 style="padding-left: 5em">Whatever does that mean  ...</h2>
+<div class="col-md-9" style="margin-bottom: 40px; color: silver; font-style: italic" ng-controller="DocumentsController">
+    <h2>Your documents</h2>
 
-    <h2 style="padding-left: 12em">.</h2>
-    <h2 style="padding-left: 12em">.</h2>
-
-    <h2 style="padding-left: 10em">Offload the meaningless works</h2>
-
+    <div ng-repeat="doc in documents">
+        {{doc}}
+        <object width="500" height="400" ng-attr-data="{{doc}}"/>
+    </div>
 
 </div>
+

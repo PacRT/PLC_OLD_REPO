@@ -89,6 +89,23 @@
     return req.pipe(poster).pipe(res);
   };
 
+  exports.getdocuments = function(req, res, err) {
+    return client.zscan("owner:" + req.user.id + ":docs", 0, function(error, resp) {
+      var docs, len, num, _i, _ref;
+      if (!error) {
+        console.log("Resp: " + resp[1].length);
+        len = resp[1].length;
+        docs = [];
+        for (num = _i = 0, _ref = len - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; num = 0 <= _ref ? ++_i : --_i) {
+          if (num % 2 === 0) {
+            docs.push(resp[1][num]);
+          }
+        }
+        return res.send(docs);
+      }
+    });
+  };
+
   exports.sioupload = function(socket) {
     socket.on('send-file', function(name, buffer) {
       console.log("Name: " + name);

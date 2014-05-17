@@ -63,6 +63,18 @@ fileupload = (req, res, uploadEndpoint, fn) ->
   #form.append("file", req.file)
   req.pipe(poster).pipe res
 
+exports.getdocuments = (req, res, err) ->
+  client.zscan "owner:#{req.user.id}:docs", 0, (error, resp) ->
+    unless error
+      console.log "Resp: #{resp[1].length}"
+      len = resp[1].length
+      docs = []
+      for num in [0..len-1]
+        if num%2 == 0
+          docs.push(resp[1][num])
+      res.send(docs)
+
+
 exports.sioupload = (socket) ->
   socket.on 'send-file', (name, buffer) ->
     console.log "Name: " + name

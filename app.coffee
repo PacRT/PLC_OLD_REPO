@@ -42,6 +42,15 @@ passport.use new LocalStrategy((username, password, done) ->
 
 path = require "path"
 app = express()
+
+allowCrossDomain = (req, res, next) ->
+  res.header('Access-Control-Allow-Origin', "*")
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+
+  next()
+
+
 app.configure ->
   app.set "views", __dirname + "/views"
   app.set "view engine", "ejs"
@@ -56,6 +65,7 @@ app.configure ->
   app.use express.session(secret: "keyboard cat")
   app.use passport.initialize()
   app.use passport.session()
+  app.use(allowCrossDomain)
   app.use app.router
   app.use express.static(path.join(__dirname, "public"))
   app.use express.static(path.join(__dirname, "bower_components"))
@@ -154,6 +164,9 @@ app.post "/login", (req, res, next) ->
     return
   ) req, res, next
   return
+
+
+app.get "/documents", ensureAuthenticated, ops.getdocuments
 
 app.get "/logout", (req, res) ->
   req.logout()

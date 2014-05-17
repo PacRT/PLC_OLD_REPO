@@ -33,13 +33,19 @@ angular
 
             .when('/dashboard', {
                 templateUrl : 'partials/dashboard',
-                controller  : 'TestController'
+                controller  : 'DocumentsController'
             })
 
     })
 
     .controller('aboutController', function($scope) {
         $scope.message = 'Look! I am an about page.';
+    })
+
+    .controller('DocumentsController', function($scope, $http) {
+        $http.get('/documents').success(function(data) {
+            $scope.documents = data
+        })
     })
 
     .controller('TestController', function ($scope, $fileUploader) {
