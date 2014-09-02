@@ -13,7 +13,8 @@
     "passport": "~0.1.17",
     "request": "~2.27.0",
     "socket.io": "~0.9.16",
-    "stylus": "~0.40.3"
+    "stylus": "~0.40.3",
+    "redis" : "~0.12"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
