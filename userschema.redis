@@ -3,6 +3,7 @@ set uid:4:username bob
 set username:bob:uid 4
 set uid:4:email ch@ch.com
 set uid:4:password secret
+set email:ch@ch.com:uid 4
 
 
 // Linking documents to the user
@@ -36,3 +37,5 @@ How do I forward a document? Mailbox?
 // Mailbox as simple key-value ?
 mb:uid:<uid>:docurl:<docurl> <permission X> // X=0 =cant forward, X=1 =can forward, X=2 =recipients can forward too
 // Also set expiration date-time
+
+

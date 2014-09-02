@@ -11,7 +11,7 @@
             </div>
 
             <!-- Example: ng-file-drop | ng-file-drop="options" -->
-            <div class="well my-drop-zone" ng-file-drop="{ url: '/upload/' }" ng-file-over="another-file-over-class">
+            <div class="well my-drop-zone" ng-file-drop="{ url: '/upload/special/' }" ng-file-over="another-file-over-class">
                 Another drop zone with its own settings
             </div>
         </div>
@@ -21,11 +21,11 @@
 
     </div>
 
+    <!-- <div class="col-md-9 my-drop-zone" style="margin-bottom: 40px" ng-file-drop="{ url: '/upload/' }" ng-file-over> -->
     <div class="col-md-9" style="margin-bottom: 40px">
         <span style="color: silver; font-style: italic">
-            <h2>Drag and drop PDFs or images</h2>
-            <h4>The queue</h4>
-            <p>Queue length: {{ uploader.queue.length }}</p>
+            <!-- <h2>Drag and drop PDFs or images</h2> -->
+            The document queue.. length: {{ uploader.queue.length }}
         </span>
 
         <table class="table">
@@ -82,7 +82,7 @@
             <div class="progress" style="">
                 <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
             </div>
-            </p>
+
             <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
                 <span class="glyphicon glyphicon-upload"></span> Upload all
             </button>

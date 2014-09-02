@@ -1,7 +1,7 @@
 request = require("request")
 stream = require("stream")
 FormData = require("form-data")
-weedMaster = "http://50.185.122.11:9333"
+weedMaster = "http://50.250.218.65:9333"
 
 util = require "util"
 redis = require("redis")
@@ -19,12 +19,14 @@ exports.upload = (req, res, err) ->
       weedRes = JSON.parse(body)
       res.send weedRes
   else if req.method is "POST"
-    request weedMaster + "/dir/assign", (error, response, body) ->
+    request "#{weedMaster}/dir/assign", (error, response, body) ->
       unless error
         weedRes = JSON.parse(body)
-        param = req.route.params[0]
-        uploadEndpoint = "http://#{weedRes.publicUrl}/#{((if (param is "") then weedRes.fid else param))}"
+        #param = req.route.params[0]
+        #uploadEndpoint = "http://#{weedRes.publicUrl}/#{((if (param is "") then weedRes.fid else param))}"
+        uploadEndpoint = "http://#{weedRes.publicUrl}/#{weedRes.fid}"
         console.log "Upload Endpoint: #{uploadEndpoint}"
+        console.log "URL: #{req.url}  and Original URL: #{req.originalUrl}"
         fileupload req, res, uploadEndpoint, dbentry
       else
         console.log "error: " + error
@@ -48,12 +50,16 @@ fileupload = (req, res, uploadEndpoint, fn) ->
     unless err
       console.log err + ":" + response.statusCode + ":" + body
       jsonbody = JSON.parse(body)
-      console.log "jsonbody: " + JSON.stringify(jsonbody)
+      jsonstring = JSON.stringify(jsonbody)
+      console.log "jsonbody:  #{jsonstring}"
+      console.log "FIle name: #{jsonbody.name}"
+      extension = jsonbody.name.substring(jsonbody.name.lastIndexOf("."))
+      console.log "Extension #{extension}"
       console.log "Error ofcourse"  if jsonbody.error isnt `undefined`
       unless jsonbody.error
         console.log "Ready to call a function here"
         unless fn == 'undefined'
-          req.docurl = uploadEndpoint
+          req.docurl = uploadEndpoint + extension
           fn(req)
     else
       console.log "Error ::: #{err}"
@@ -74,6 +80,66 @@ exports.getdocuments = (req, res, err) ->
           docs.push(resp[1][num])
       res.send(docs)
 
+exports.getdocuments1 = (req, res, err) ->
+  client.zscan "owner:#{req.user.id}:docs", 0, (error, resp) ->
+    unless error
+      console.log "Resp: #{resp[1].length}"
+      len = resp[1].length
+      docs = []
+      fids = []
+      for num in [0..len-1]
+        if num%2 == 0
+          doc = resp[1][num]
+          doc1 = doc.substring(doc.indexOf("://")+3)
+          doc2 = doc1.substring(0, doc1.indexOf("/"))
+          docUrl = doc2.substring(0, doc2.indexOf(":"))
+          docPort = doc2.substring(doc2.indexOf(":")+1)
+          docFid = doc1.substring(doc1.indexOf("/")+1)
+          fids.push docFid
+          docs.push("/documents/#{docUrl}/#{docPort}/#{docFid}")
+      req.session.fids = fids
+      res.send(docs)
+
+exports.getdocuments2 = (req, res, err) ->
+  fullzscan "owner:#{req.user.id}:docs", (result) ->
+    console.log "Result: #{result}"
+    len = result.length
+    console.log "Result Length: #{len}"
+    docs = []
+    fids = []
+    for num in [0..len-1] when len > 0
+      if num%2 == 0
+        doc = result[num]
+        doc1 = doc.substring(doc.indexOf("://")+3)
+        doc2 = doc1.substring(0, doc1.indexOf("/"))
+        docUrl = doc2.substring(0, doc2.indexOf(":"))
+        docPort = doc2.substring(doc2.indexOf(":")+1)
+        docFid = doc1.substring(doc1.indexOf("/")+1)
+        fids.push docFid
+        docs.push("/documents/#{docUrl}/#{docPort}/#{docFid}")
+    req.session.fids = fids
+    res.send(docs)
+
+exports.fileServiceMask = (req, res, err) ->
+  unless req.session.fids.indexOf(req.params.fid) is -1
+    request.get("http://#{req.params.vs}:#{req.params.prt}/#{req.params.fid}").pipe res
+
+fullzscan = (indexname, fn) ->
+  result = []
+  zscan(indexname, 0, result, fn)
+
+zscan = (indexname, start, acc, fn) ->
+  client.zscan indexname, start, (error, resp) ->
+    unless error
+      console.log "Zscan response[0]: #{resp[0]}"
+      console.log "Zscan response[1]: #{resp[1]}"
+      acc = acc.concat(resp[1])
+      console.log "Accumulator: #{acc}"
+      zscan(indexname, parseInt(resp[0]), acc) unless parseInt(resp[0]) == 0
+      fn(acc)
+
+
+####### Code below is not used at this moment #######
 
 exports.sioupload = (socket) ->
   socket.on 'send-file', (name, buffer) ->

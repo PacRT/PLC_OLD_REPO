@@ -55,7 +55,7 @@ app.configure ->
   app.set "views", __dirname + "/views"
   app.set "view engine", "ejs"
   #app.engine "ejs", require("ejs-locals")
-  app.use express.logger()
+  app.use express.logger('tiny')
   app.use express.cookieParser()
   #app.use express.bodyParser() - this bodyParser() is equivalent of the following three json(), urlencoded() and multipart()
   app.use express.json()
@@ -73,33 +73,18 @@ app.configure ->
 
 getuser = (req, res) ->
   if typeof req.user != 'undefined'
-    return req.user.username
+    return req.user.name
   else
     return 'notdefined'
 
 app.get "/", (req, res) ->
   res.render "main",
     user: req.user
-    username: getuser(req, res)
-
-
-app.get "/login", (req, res) ->
-  res.render "partials/login",
-    user: req.user
-    message: req.session.messages
-
-  return
+    name: getuser(req, res)
 
 app.get "/contact", (req, res) ->
   res.render "main",
     user: req.user
-
-app.get "/partials/login", (req, res) ->
-  res.render "partials/login",
-    user: req.user
-    message: req.session.messages
-
-  return
 
 app.get "/landing", (req, res) ->
   res.render "partials/landing",
@@ -129,8 +114,65 @@ app.get "/partials/about", (req, res) ->
 
   return
 
+app.get "/register", (req, res) ->
+  res.render "partials/register",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/register", (req, res) ->
+  res.render "partials/register",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/loginfailure", (req, res) ->
+  res.render "partials/loginfailure",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/loginfailure", (req, res) ->
+  res.render "partials/loginfailure",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+
+app.get "/registrationResponse", (req, res) ->
+  res.render "partials/registrationResponse",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/registrationResponse", (req, res) ->
+  res.render "partials/registrationResponse",
+    user: req.user
+    message: req.session.messages
+
+  return
+
 app.get "/dashboard", ensureAuthenticated, (req, res) ->
   res.render "partials/dashboard",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/invite", ensureAuthenticated, (req, res) ->
+  res.render "partials/invite",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/invite", (req, res) ->
+  res.render "partials/invite",
     user: req.user
     message: req.session.messages
 
@@ -152,12 +194,16 @@ app.post "/login", (req, res, next) ->
     return next(err)  if err
     unless user
       req.session.messages = [info.message]
-      return res.redirect("/#/login")
+      req.loginfailed = true
+      console.log "info.message #{info.message}"
+      return res.redirect("/#/loginfailure")
     req.logIn user, (err) ->
       return next(err)  if err
       console.log "req.session.returnTo #{req.session.returnTo}"
       if req.session.returnTo == "/partials/upload-part"
-        res.redirect "/"
+        res.redirect "/#/"
+      else if req.session.returnTo == "/documents"
+        res.redirect "/#/dashboard"
       else
         res.redirect req.session.returnTo || "/" #returnTo is a custom session variable to identify requesting page
 
@@ -165,14 +211,22 @@ app.post "/login", (req, res, next) ->
   ) req, res, next
   return
 
+app.post "/register", (req, res, next) ->
+  console.log "Registering user: #{req.param("username")}"
+  console.log "Registering user's password (hehe dont keep it long here): #{req.param("password")}"
+  console.log "Registering user's email: #{req.param("email")}"
+  res.redirect '/#/registrationResponse' #, {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
+  #User.registerUser(req.getParameter())
 
-app.get "/documents", ensureAuthenticated, ops.getdocuments
+app.get "/documents", ensureAuthenticated, ops.getdocuments2
+
+app.get "/documents/:vs/:prt/:fid", ensureAuthenticated, ops.fileServiceMask
 
 app.get "/logout", (req, res) ->
   req.logout()
-  res.redirect "/"
+  res.redirect "/#/"
   return
 
-app.listen 3000, ->
-  console.log "Express server listening on port 3000"
+app.listen 8000, ->
+  console.log "Express server listening on port 8000"
   return

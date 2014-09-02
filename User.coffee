@@ -4,6 +4,13 @@ util = require "util"
 
 #redis.debug_mode = true
 
+reader = require "./routes/filereader"
+
+FileData = reader.FileData
+
+findbyidlua = new FileData("./miscscripts/findbyid.lua", "ascii")
+findbyusernamelua = new FileData("./miscscripts/findbyusername.lua", "ascii")
+
 # if you'd like to select database 3, instead of 0 (default), call
 # client.select(3, function() { /* ... */ });
 client.on "error", (err) ->
@@ -36,8 +43,58 @@ lua_find_by_username = "\n
   return uid ..\"|\".. KEYS[1] ..\"|\".. password ..\"|\".. email\n
   "
 
-
 exports.findById = (id, fn) ->
+  findbyidlua.getData( (err, data) ->
+    unless err
+      console.log "Data: #{data}"
+      client.eval data, 1, "#{id}", (error, resp) ->
+        unless error
+          console.log resp
+          arr = resp.split '|'
+          user = {
+            id: arr[0]
+            username: arr[1]
+            password: arr[2]
+            email: arr[3]
+            name: arr[4]
+          }
+          if arr[1]
+            fn null, user
+          else
+            fn new Error("User: #{username} does not exist")
+        else
+          console.log "Error: #{error}"
+          fn new Error("User: #{username} does not exist")
+        return
+  )
+
+exports.findByUsername = (username, fn) ->
+  findbyusernamelua.getData( (err, data) ->
+    console.log data
+    client.eval data, 1, "#{username}", (error, resp) ->
+      unless error
+        console.log resp
+        arr = resp.split '|'
+        user = {
+          id: arr[0]
+          username: arr[1]
+          password: arr[2]
+          email: arr[3]
+          name: arr[4]
+        }
+        if arr[0]
+          fn null, user
+        else
+          #fn new Error("User: #{username} does not exist")
+          fn null, null
+      else
+        console.log "Error: #{error}"
+        #fn new Error("User: #{username} does not exist")
+        fn null, null
+  )
+
+
+exports.findByIdOld = (id, fn) ->
   console.log lua_find_by_id
   client.eval lua_find_by_id, 1, "#{id}", (error, resp) ->
     unless error
@@ -58,7 +115,7 @@ exports.findById = (id, fn) ->
       fn new Error("User: #{username} does not exist")
     return
 
-exports.findByUsername = (username, fn) ->
+exports.findByUsernameOld = (username, fn) ->
   console.log lua_find_by_username
   client.eval lua_find_by_username, 1, "#{username}", (error, resp) ->
     unless error

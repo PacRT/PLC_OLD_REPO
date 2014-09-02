@@ -31,6 +31,26 @@ angular
                 controller  : 'TestController'
             })
 
+            .when('/register', {
+                templateUrl : 'partials/register',
+                controller  : 'TestController'
+            })
+
+            .when('/loginfailure', {
+                templateUrl : 'partials/loginfailure',
+                controller  : 'TestController'
+            })
+
+            .when('/registrationResponse', {
+                templateUrl : 'partials/registrationResponse',
+                controller  : 'TestController'
+            })
+
+            .when('/invite', {
+                templateUrl : 'partials/invite',
+                controller  : 'TestController'
+            })
+
             .when('/dashboard', {
                 templateUrl : 'partials/dashboard',
                 controller  : 'DocumentsController'
@@ -42,10 +62,19 @@ angular
         $scope.message = 'Look! I am an about page.';
     })
 
-    .controller('DocumentsController', function($scope, $http) {
+    /*.controller('DocumentsController', function($scope, $http) {
         $http.get('/documents').success(function(data) {
             $scope.documents = data
         })
+    })*/
+
+    .controller('DocumentsController', function($scope, $http) {
+        $scope.loadDocs = function() {
+            $http.get('/documents').success(function (data) {
+                $scope.documents = data
+            })
+        }
+        $scope.loadDocs()
     })
 
     .controller('TestController', function ($scope, $fileUploader) {
@@ -55,7 +84,6 @@ angular
             url: '/upload/'
             //url: 'http://nervgh.github.io/pages/angular-file-upload/examples/image-preview/upload.php'
         });
-
 
         // ADDING FILTERS
 
@@ -111,6 +139,7 @@ angular
 
         uploader.bind('completeall', function (event, items) {
             console.info('Complete all', items);
+            $scope.loadDocs();
         });
     });
 

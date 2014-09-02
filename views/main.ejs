@@ -49,21 +49,22 @@
 
     <div class="navbar navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">The Club</a>
+            <a class="navbar-brand" href="#" ng-show="'<%=name%>' == 'notdefined'">The Club</a>
+            <a class="navbar-brand" href="#" ng-show="'<%=name%>' != 'notdefined'"><%=name%></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li ng-show="'<%=user%>' != 'undefined'"><a href="#dashboard">My Stuffs</a></li>
+                <li><a href="#about">About The Club</a></li>
+                <li><a href="#invite">Invite Friends</a></li>
                 <li class="active dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workspace <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers' Zone<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="../simple">Simple example</a></li>
-                        <li class="active"><a href="#">Uploads only images (with canvas preview)</a></li>
-                        <li><a href="../without-bootstrap">Without bootstrap example</a></li>
+                        <li><a href="#">How to wrtie an app for The Club</a></li>
+                        <li class="active"><a href="#">Document formats and standards</a></li>
                     </ul>
                 </li>
-                <li><a href="#about">About The Club</a></li>
-                <li><a href="https://github.com/nervgh/angular-file-upload">Invite Friends</a></li>
-                <li><a href="https://github.com/nervgh/angular-file-upload">Developers' Zone</a></li>
+
                 <!-- <li><a href="https://github.com/nervgh/angular-file-upload">View on Github</a></li> -->
                 <!-- <li><a href="https://raw.github.com/nervgh/angular-file-upload/master/angular-file-upload.min.js">Download</a></li> -->
                 <form class="navbar-form navbar-left" action="/login" method="post" ng-show="'<%=user%>' == 'undefined'">
@@ -75,8 +76,9 @@
                     </div>
                     <button type="submit" class="btn btn-link">Log In</button>
                 </form>
-                <li ng-show="'<%=username%>' != 'notdefined'"><a>Welcome <%=username%></a></li>
+                <!-- <li ng-show="'<%=name%>' != 'notdefined'"><a>Welcome <i><b><%=name%></b></i></a></li> -->
                 <li ng-show="'<%=user%>' != 'undefined'"><a href="/logout">Log Out</a></li>
+                <li ng-show="'<%=user%>' == 'undefined'"><a href="/#/register">Register</a></li>
             </ul>
         </div>
     </div>

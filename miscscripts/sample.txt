@@ -1,2 +1,2 @@
-I am Samle text file
+I am Sample text file
 This is second line of sample.txt
