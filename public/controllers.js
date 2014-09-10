@@ -46,6 +46,11 @@ angular
                 controller  : 'TestController'
             })
 
+            .when('/inactiveResponse', {
+                templateUrl : 'partials/inactiveResponse',
+                controller  : 'TestController'
+            })
+
             .when('/invite', {
                 templateUrl : 'partials/invite',
                 controller  : 'TestController'

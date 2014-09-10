@@ -19,4 +19,5 @@ redis.call('SET', "uid:" ..uid.. ":email", ARGV[2]) -- ARGV[2] is email
 redis.call('SET', "uid:" ..uid.. ":password", ARGV[3]) -- ARGV[3] is password
 redis.call('SET', "email:" ..ARGV[2].. ":uid", uid)
 redis.call('SET', "uid:" ..uid.. ":name", ARGV[4]) -- ARGV[4] is the fullname of the user
+redis.call('SET', "uid:" ..uid.. ":status", ARGV[5]) -- ARGV[5] is the status of user - active/inactive/premium etc.
 return ARGV[1] ..":".. uid ..":".. ARGV[2]

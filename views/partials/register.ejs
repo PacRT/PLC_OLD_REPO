@@ -1,5 +1,5 @@
 <div class="col-md-9" style="margin-bottom: 40px; color: silver;">
-    <form class="form-horizontal" action="/register" method="post">
+    <form name="regForm" class="form-horizontal" action="/register" method="post">
         <div class="form-group" style="border: 2px double lightgray; border-radius: 10px; margin-left: 320px">
             <label for="inputName" class="control-label col-xs-3">Name</label>
             <div class="col-xs-9">
@@ -7,7 +7,12 @@
             </div>
             <label for="inputUser" class="control-label col-xs-3">Username</label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" id="inputUser" name="username" placeholder="username" style="border: 0px" required>
+                <input type="text" class="form-control" id="inputUser"
+                       name="username"
+                       pattern="(?=.{3,16}$)[A-Za-z]+[0-9]*"
+                       title="3-16 characters with only alphabets and optionally trailing numbers"
+                       placeholder="username" style="border: 0px" required>
+
             </div>
         <!--</div>
         <div class="form-group"> -->

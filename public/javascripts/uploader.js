@@ -29,7 +29,7 @@ function fileHandler(e) {
     var files = e.target.files || e.dataTransfer.files;
 
     if (files) {
-        //send only the first one
+        //send only the first one as every file is individually handled
         file = files[0];
     }
 }

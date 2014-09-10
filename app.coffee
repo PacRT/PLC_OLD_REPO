@@ -62,7 +62,9 @@ app.configure ->
   app.use express.urlencoded()
   #app.use express.multipart() #- probably we dont need it - check out while uploading big files
   app.use express.methodOverride()
-  app.use express.session(secret: "keyboard cat")
+  app.use express.session(
+    secret: "hizibizi kitkat"
+  )
   app.use passport.initialize()
   app.use passport.session()
   app.use(allowCrossDomain)
@@ -157,6 +159,21 @@ app.get "/partials/registrationResponse", (req, res) ->
 
   return
 
+
+app.get "/inactiveResponse", (req, res) ->
+  res.render "partials/inactiveResponse",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/inactiveResponse", (req, res) ->
+  res.render "partials/inactiveResponse",
+    user: req.user
+    message: req.session.messages
+
+  return
+
 app.get "/dashboard", ensureAuthenticated, (req, res) ->
   res.render "partials/dashboard",
     user: req.user
@@ -197,6 +214,8 @@ app.post "/login", (req, res, next) ->
       req.loginfailed = true
       console.log "info.message #{info.message}"
       return res.redirect("/#/loginfailure")
+    console.log "User: %j", user
+    return res.redirect '/#/inactiveResponse' if user.status == "inactive"
     req.logIn user, (err) ->
       return next(err)  if err
       console.log "req.session.returnTo #{req.session.returnTo}"
@@ -215,6 +234,7 @@ app.post "/register", (req, res, next) ->
   console.log "Registering user: #{req.param("username")}"
   console.log "Registering user's password (hehe dont keep it long here): #{req.param("password")}"
   console.log "Registering user's email: #{req.param("email")}"
+  User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive")
   res.redirect '/#/registrationResponse' #, {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
   #User.registerUser(req.getParameter())
 

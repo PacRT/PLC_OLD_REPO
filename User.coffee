@@ -10,6 +10,7 @@ FileData = reader.FileData
 
 findbyidlua = new FileData("./miscscripts/findbyid.lua", "ascii")
 findbyusernamelua = new FileData("./miscscripts/findbyusername.lua", "ascii")
+registrationlua = new FileData("./miscscripts/registration.lua", "ascii")
 
 # if you'd like to select database 3, instead of 0 (default), call
 # client.select(3, function() { /* ... */ });
@@ -17,12 +18,23 @@ client.on "error", (err) ->
   console.log "Error " + err
   return
 
-exports.registerUser = (username, password, email) ->
-  uid = client.incr "global:nextUserId"
-  client.set "uid:#{uid}:username", username
-  client.set "uid:#{uid}:password", password
-  client.set "username:#{username}:uid", uid
-  client.set "uid:#{uid}:email", email
+exports.registerUser = (name, username, password, email, status) ->
+  console.log "Calling: registerUser"
+  registrationlua.getData( (err, data) ->
+    console.log "Registration lua content: #{data}"
+    unless err
+      console.log "Data #{data}"
+      client.eval data, 0, "#{username}", "#{email}", "#{password}", "#{name}", "#{status}", (error, resp) ->
+        unless error
+          client.publish "RegReqConfEmail", "{username: #{username}, email: #{email} }"
+          console.log resp
+          return
+        else
+          console.log "Error error: #{error}"
+    else
+      console.log "Error err: #{err}"
+      console.log "#{process.cwd()}"
+  )
   return
 
 lua_find_by_id = "\n
@@ -57,6 +69,7 @@ exports.findById = (id, fn) ->
             password: arr[2]
             email: arr[3]
             name: arr[4]
+            status: arr[5]
           }
           if arr[1]
             fn null, user
@@ -81,6 +94,7 @@ exports.findByUsername = (username, fn) ->
           password: arr[2]
           email: arr[3]
           name: arr[4]
+          status: arr[5]
         }
         if arr[0]
           fn null, user
