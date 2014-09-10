@@ -1,0 +1,15 @@
+Scenario
+=======
+
+You receive email
+Email processor checks for attachments
+Then email processor (EP) extracts the attachments
+EP uploads the attachments to the recipients PLC account
+find the recipients PLC uid
+get the username from recipient’s email id by striping off the ‘@‘ and trailing part Note: recipients’ email id is always PLC email id, other wise one wouldn’t receive the documents sent.
+find UID by username
+upload attachments to that uid -
+find the senders PLC uid
+usual case: use "find by email” procedure to find UID. this email in question is normally not paperless club email id. Check the following
+if in rare case the email ends with @paperlessclub.org then username is the string without the ‘@paperlessclub.org’. Use “find by username” procedure.
+ if email id is not @paperlessclub.org id and “find by email” process finds Nil/Null as result then register (but not activate) the user and send him/her an email to confirm
