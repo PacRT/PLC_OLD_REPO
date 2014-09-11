@@ -27,7 +27,7 @@ def sendconfemail(msg):
         j_son = msg.decode('utf-8')
         vj_son = json.loads(j_son)
         print(vj_son)
-        #sendmail(vj_son)
+        sendmail(vj_son)
     except AttributeError:
         print(msg, " :: Possibly the literal is not string and cannot be treated as JSON")
     except ValueError:
