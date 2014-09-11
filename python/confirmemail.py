@@ -14,7 +14,6 @@ p = r.pubsub()
 p.subscribe("RegReqConfEmail")
 
 def sendmail(json_msg):
-    name = ""
     try:
         name = json_msg['name']
     except:
