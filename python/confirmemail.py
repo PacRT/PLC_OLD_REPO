@@ -14,13 +14,12 @@ p = r.pubsub()
 p.subscribe("RegReqConfEmail")
 
 def sendmail(json_msg):
-    name = "There"
     try:
         name = json_msg['name']
     except:
         name = "There"
 
-    msg = MIMEText("Hello" + name + "!!! Thanks for the registration request. Check your email for further actions. It may take longer due to system load and verification.")
+    msg = MIMEText("Hello " + name + "!!! Thanks for the registration request. Check your email for further actions. It may take longer due to system load and verification.")
     msg['Subject'] = "Paperless CLub registration request confirmation message"
     msg['To'] = json_msg['email']
     msg['Bcc'] = "chiradip@chiradip.com"
