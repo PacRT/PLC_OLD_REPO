@@ -30,7 +30,7 @@
         console.log("Data " + data);
         return client["eval"](data, 0, "" + username, "" + email, "" + password, "" + name, "" + status, function(error, resp) {
           if (!error) {
-            client.publish("RegReqConfEmail", '{"name" : "#{name}", "username": "#{username}", "email": "#{email}", "status" : "#{status}" }');
+            client.publish("RegReqConfEmail", '{"name" : \"#{name}\", "username": \"#{username}\", "email": \"#{email}\", "status" : \"#{status}\" }');
             console.log(resp);
           } else {
             return console.log("Error error: " + error);
