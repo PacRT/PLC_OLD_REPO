@@ -26,7 +26,7 @@ exports.registerUser = (name, username, password, email, status) ->
       console.log "Data #{data}"
       client.eval data, 0, "#{username}", "#{email}", "#{password}", "#{name}", "#{status}", (error, resp) ->
         unless error
-          client.publish "RegReqConfEmail", '{"name" : \"#{name}\", "username": \"#{username}\", "email": \"#{email}\", "status" : \"#{status}\" }'
+          client.publish "RegReqConfEmail", "{\"name\" : \"#{name}\", \"username\": \"#{username}\", \"email\": \"#{email}\", \"status\" : \"#{status}\" }"
           console.log resp
           return
         else
