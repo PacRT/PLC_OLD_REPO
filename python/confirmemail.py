@@ -1,10 +1,12 @@
 #Import smtplib for the actual sending function
-import smtplib
-import redis
-import json, sys, time
+import smtplib, redis, json, sys, logging
 
 # Import the email modules we'll need
 from email.mime.text import MIMEText
+
+logging.basicConfig(filename='/var/log/confirmmemail.log',level=logging.DEBUG)
+
+logging.debug("Starting up....")
 
 s = smtplib.SMTP('paperlessclub.org')
 
