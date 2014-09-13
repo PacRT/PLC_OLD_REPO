@@ -239,7 +239,7 @@ app.post "/register", (req, res, next) ->
     unless error
       res.redirect '/#/registrationResponse'
     else
-      res.render '/#loginfailure'
+      res.render '/#/loginfailure'
   )
   #res.redirect '/#/registrationResponse'
   # , {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
