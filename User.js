@@ -33,7 +33,8 @@
             client.publish("RegReqConfEmail", "{\"name\" : \"" + name + "\", \"username\": \"" + username + "\", \"email\": \"" + email + "\", \"status\" : \"" + status + "\" }");
             console.log(resp);
           } else {
-            return console.log("Error error: " + error);
+            console.log("Error error: " + error);
+            return res.redirect("/#/registrationError");
           }
         });
       } else {

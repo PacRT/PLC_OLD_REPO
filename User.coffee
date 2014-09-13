@@ -31,6 +31,7 @@ exports.registerUser = (name, username, password, email, status) ->
           return
         else
           console.log "Error error: #{error}"
+          res.redirect "/#/registrationError"
     else
       console.log "Error err: #{err}"
       console.log "#{process.cwd()}"
