@@ -234,8 +234,11 @@ app.post "/register", (req, res, next) ->
   console.log "Registering user: #{req.param("username")}"
   console.log "Registering user's password (hehe dont keep it long here): #{req.param("password")}"
   console.log "Registering user's email: #{req.param("email")}"
-  User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive")
-  res.redirect '/#/registrationResponse' #, {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
+  User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", (error) ->
+    res.redirect '/#registrationError' if error
+    res.redirect '/#/registrationResponse'
+  )
+  #res.redirect '/#/registrationResponse' #, {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
   #User.registerUser(req.getParameter())
 
 app.get "/documents", ensureAuthenticated, ops.getdocuments2

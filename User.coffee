@@ -18,7 +18,7 @@ client.on "error", (err) ->
   console.log "Error " + err
   return
 
-exports.registerUser = (name, username, password, email, status) ->
+exports.registerUser = (name, username, password, email, status, fn) ->
   console.log "Calling: registerUser"
   registrationlua.getData( (err, data) ->
     console.log "Registration lua content: #{data}"
@@ -31,7 +31,7 @@ exports.registerUser = (name, username, password, email, status) ->
           return
         else
           console.log "Error error: #{error}"
-          res.redirect "/#/registrationError"
+          fn(error)
     else
       console.log "Error err: #{err}"
       console.log "#{process.cwd()}"
