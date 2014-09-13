@@ -260,10 +260,11 @@
     console.log("Registering user's email: " + (req.param("email")));
     return User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", function(error) {
       console.log("/register - error " + error);
-      if (error) {
-        res.redirect('/#registrationError');
+      if (!error) {
+        return res.redirect('/#/registrationResponse');
+      } else {
+        return res.redirect('/#registrationError');
       }
-      return res.redirect('/#/registrationResponse');
     });
   });
 
