@@ -235,6 +235,7 @@ app.post "/register", (req, res, next) ->
   console.log "Registering user's password (hehe dont keep it long here): #{req.param("password")}"
   console.log "Registering user's email: #{req.param("email")}"
   User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", (error) ->
+    console.log "/register - error #{error}" 
     res.redirect '/#registrationError' if error
     res.redirect '/#/registrationResponse'
   )
