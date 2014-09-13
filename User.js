@@ -22,7 +22,7 @@
     console.log("Error " + err);
   });
 
-  exports.registerUser = function(name, username, password, email, status) {
+  exports.registerUser = function(name, username, password, email, status, fn) {
     console.log("Calling: registerUser");
     registrationlua.getData(function(err, data) {
       console.log("Registration lua content: " + data);
@@ -34,7 +34,7 @@
             console.log(resp);
           } else {
             console.log("Error error: " + error);
-            return res.redirect("/#/registrationError");
+            return fn(error);
           }
         });
       } else {

@@ -238,7 +238,8 @@ app.post "/register", (req, res, next) ->
     res.redirect '/#registrationError' if error
     res.redirect '/#/registrationResponse'
   )
-  #res.redirect '/#/registrationResponse' #, {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
+  #res.redirect '/#/registrationResponse'
+  # , {response: "Check your email at #{req.param('email')} for quickly complete last leg of your registration"}
   #User.registerUser(req.getParameter())
 
 app.get "/documents", ensureAuthenticated, ops.getdocuments2
