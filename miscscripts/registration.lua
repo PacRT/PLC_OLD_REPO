@@ -13,6 +13,11 @@
 -- set email:ch@ch.com:uid 4
 
 local uid = redis.call('INCR', "global:getNextUserId")
+
+local unamecheck_uid = redis.call('GET', "username:" ..ARGV[1].. ":uid")
+if unamecheck_uid == nil then error("Username Exists") end
+local emailcheck_uid = redis.call('GET', "email:" ..ARGV[2].. ":uid")
+if emailcheck_uid == nil then error("Email already registered") end
 redis.call('SET', "uid:" ..uid.. ":username", ARGV[1]) -- ARGV[1] is username
 redis.call('SET', "username:" ..ARGV[1].. ":uid", uid)
 redis.call('SET', "uid:" ..uid.. ":email", ARGV[2]) -- ARGV[2] is email
