@@ -91,7 +91,8 @@ angular
         // Creates a uploader
         var uploader = $scope.uploader = $fileUploader.create({
             scope: $scope,
-            url: '/upload/'
+            url: '/upload/',
+            message: $scope.message
             //url: 'http://nervgh.github.io/pages/angular-file-upload/examples/image-preview/upload.php'
         });
 
