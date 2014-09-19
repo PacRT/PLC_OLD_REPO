@@ -1,7 +1,8 @@
 request = require("request")
 stream = require("stream")
 FormData = require("form-data")
-weedMaster = "http://50.250.218.64:9333"
+#weedMaster = "http://50.250.218.64:9333"
+weedMaster = "http://192.168.1.2:9333"
 
 util = require "util"
 redis = require("redis")

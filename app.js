@@ -263,7 +263,7 @@
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
-        return res.render('/#/loginfailure');
+        return res.render('/#/registrationError');
       }
     });
   });

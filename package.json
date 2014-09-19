@@ -14,7 +14,8 @@
     "request": "~2.27.0",
     "socket.io": "~0.9.16",
     "stylus": "~0.40.3",
-    "redis" : "~0.12"
+    "redis" : "~0.12",
+     passport-local: "^1.0.0"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
