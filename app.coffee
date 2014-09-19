@@ -159,7 +159,6 @@ app.get "/partials/registrationResponse", (req, res) ->
 
   return
 
-
 app.get "/inactiveResponse", (req, res) ->
   res.render "partials/inactiveResponse",
     user: req.user
@@ -169,6 +168,20 @@ app.get "/inactiveResponse", (req, res) ->
 
 app.get "/partials/inactiveResponse", (req, res) ->
   res.render "partials/inactiveResponse",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/registrationError", (req, res) ->
+  res.render "partials/registrationError",
+    user: req.user
+    message: req.session.messages
+
+  return
+
+app.get "/partials/registrationError", (req, res) ->
+  res.render "partials/registrationError",
     user: req.user
     message: req.session.messages
 

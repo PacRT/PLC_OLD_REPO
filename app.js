@@ -188,6 +188,20 @@
     });
   });
 
+  app.get("/registrationError", function(req, res) {
+    res.render("partials/registrationError", {
+      user: req.user,
+      message: req.session.messages
+    });
+  });
+
+  app.get("/partials/registrationError", function(req, res) {
+    res.render("partials/registrationError", {
+      user: req.user,
+      message: req.session.messages
+    });
+  });
+
   app.get("/dashboard", ensureAuthenticated, function(req, res) {
     res.render("partials/dashboard", {
       user: req.user,
