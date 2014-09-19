@@ -277,6 +277,7 @@
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
+        req.session.messages = error;
         return res.redirect('/#/registrationError');
       }
     });
