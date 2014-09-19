@@ -1,6 +1,7 @@
 <div class="col-md-11" style="margin-bottom: 40px; margin-top: 10px; margin-left: 100px; color: green; font-size: 20px; font-family:corporate">
     <div>
-        <%= message %>
+        <%= req.session.messages %>
+        <%= req.session.message %>
         <span class="glyphicon glyphicon-signal"></span> Sorry!!!! You are registered but at this moment we are not able to activate every user. But there is a high chance that we will be able to accommodate you soon. Please watch your email - we will send you confirmation the moment you are activated.
     </div>
 </div>
