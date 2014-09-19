@@ -51,6 +51,11 @@ angular
                 controller  : 'TestController'
             })
 
+            .when('/registrationError', {
+                templateUrl : 'partials/registrationError',
+                controller  : 'TestController'
+            })
+
             .when('/invite', {
                 templateUrl : 'partials/invite',
                 controller  : 'TestController'
