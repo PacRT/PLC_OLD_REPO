@@ -15,7 +15,8 @@
     "socket.io": "~0.9.16",
     "stylus": "~0.40.3",
     "redis" : "~0.12",
-    "passport-local" : "^1.0.0"
+    "passport-local" : "^1.0.0",
+    "form-data" : "^0.1.4"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
