@@ -16,7 +16,8 @@
     "stylus": "~0.40.3",
     "redis" : "~0.12",
     "passport-local" : "^1.0.0",
-    "form-data" : "^0.1.4"
+    "form-data" : "^0.1.4",
+    "bower" : "1.3.11"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
