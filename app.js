@@ -277,7 +277,7 @@
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
-        return res.render('/#/registrationError');
+        return res.redirect('/#/registrationError');
       }
     });
   });
