@@ -208,6 +208,10 @@ app.get "/partials/invite", (req, res) ->
 
   return
 
+
+app.get "/messages", (req, res) ->
+  res.send(req.session.messages)
+
 app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
   filename = req.params.filename
   return unless filename # might want to change this
@@ -252,7 +256,7 @@ app.post "/register", (req, res, next) ->
     unless error
       res.redirect '/#/registrationResponse'
     else
-      res.expose("somehting", 'message')
+      req.session.messages = "Error: #{error}"
       res.redirect '/#/registrationError'
   )
   #res.redirect '/#/registrationResponse'

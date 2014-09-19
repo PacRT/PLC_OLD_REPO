@@ -223,6 +223,10 @@
     });
   });
 
+  app.get("/messages", function(req, res) {
+    return res.send(req.session.messages);
+  });
+
   app.get("/partials/:filename", ensureAuthenticated, function(req, res) {
     var filename;
     filename = req.params.filename;
@@ -277,7 +281,7 @@
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
-        res.expose("somehting", 'message');
+        req.session.messages = "Error: " + error;
         return res.redirect('/#/registrationError');
       }
     });
