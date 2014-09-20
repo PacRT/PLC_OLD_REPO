@@ -89,24 +89,15 @@ app.get "/contact", (req, res) ->
     user: req.user
 
 app.get "/landing", (req, res) ->
-  res.render "partials/landing",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/landing", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/landing", (req, res) ->
-  res.render "partials/landing",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/landing", {user: req.user, message: req.session.messages}
   return
 
 app.get "/about", (req, res) ->
-  res.render "partials/about",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/about", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/about", (req, res) ->
@@ -146,36 +137,23 @@ app.get "/partials/loginfailure", (req, res) ->
 
 
 app.get "/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/inactiveResponse", (req, res) ->
-  res.render "partials/inactiveResponse",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/inactiveResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/inactiveResponse", (req, res) ->
-  res.render "partials/inactiveResponse",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/inactiveResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/registrationError", (req, res) ->
   res.render "partials/registrationError", {user: req.user, message: req.session.messages}
-
   return
 
 app.get "/partials/registrationError", (req, res) ->
