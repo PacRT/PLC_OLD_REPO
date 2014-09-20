@@ -235,7 +235,7 @@
     }
     res.render("partials/" + filename, {
       user: req.user,
-      message: req.session.message
+      message: req.session.messages
     });
   });
 

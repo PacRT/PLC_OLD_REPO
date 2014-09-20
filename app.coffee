@@ -174,16 +174,12 @@ app.get "/partials/inactiveResponse", (req, res) ->
   return
 
 app.get "/registrationError", (req, res) ->
-  res.render "partials/registrationError",
-    user: req.user
-    message: req.session.messages
+  res.render "partials/registrationError", {user: req.user, message: req.session.messages}
 
   return
 
 app.get "/partials/registrationError", (req, res) ->
-  res.render "partials/registrationError",
-    user: req.user
-    message: req.session.messages
+  res.render "partials/registrationError", {user: req.user, message: req.session.messages}
 
   return
 
@@ -217,7 +213,7 @@ app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
   return unless filename # might want to change this
   res.render "partials/#{filename}",
     user: req.user
-    message:req.session.message
+    message:req.session.messages
 
   return
 

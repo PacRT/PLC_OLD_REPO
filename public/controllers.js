@@ -95,13 +95,6 @@ angular
             //url: 'http://nervgh.github.io/pages/angular-file-upload/examples/image-preview/upload.php'
         });
 
-        $scope.geMessages = function() {
-            $fileUploader.get('/messages').success(function(data) {
-                $scope.messages = data
-            })
-        }
-        $scope.getMessages()
-
         // ADDING FILTERS
 
         // Images and PDF only
