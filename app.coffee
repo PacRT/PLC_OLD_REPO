@@ -179,7 +179,7 @@ app.post "/login", (req, res, next) ->
       req.session.messages = "Hello #{user.name}! Your account has been deactivated. If it was not you who did it please contact us"
       return res.redirect '/#/inactiveResponse'
     else if user.status == "suspended"
-      req.session.messages = "Hello #{user.name}! Your account has been temporarily suspended and undergoing an investigation. Please cooperate with us by not trying to access your account till further notice from us."
+      req.session.messages = "Hello #{user.name}! Your account has been temporarily suspended and undergoing an investigation. Please cooperate with us by not trying to access your account until further notice."
       return res.redirect '/#/inactiveResponse'
     req.logIn user, (err) ->
       return next(err)  if err
