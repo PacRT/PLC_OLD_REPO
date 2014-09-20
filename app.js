@@ -92,6 +92,7 @@
   };
 
   app.get("/", function(req, res) {
+    console.log("called ........ app.get '/' ");
     return res.render("main", {
       user: req.user,
       name: getuser(req, res)

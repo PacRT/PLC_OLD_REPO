@@ -20,7 +20,6 @@ angular
                 controller  : 'TestController'
             })
 
-            // route for the about page
             .when('/landing', {
                 templateUrl : 'partials/landing',
                 controller  : 'TestController'
