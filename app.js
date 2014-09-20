@@ -264,7 +264,7 @@
           return next(err);
         }
         console.log("req.session.returnTo " + req.session.returnTo);
-        if (req.session.returnTo === "/partials/upload-part") {
+        if (req.session.returnTo === "/partials/notification") {
           return res.redirect("/#/");
         } else if (req.session.returnTo === "/documents") {
           return res.redirect("/#/dashboard");

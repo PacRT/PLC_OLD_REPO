@@ -184,7 +184,7 @@ app.post "/login", (req, res, next) ->
     req.logIn user, (err) ->
       return next(err)  if err
       console.log "req.session.returnTo #{req.session.returnTo}"
-      if req.session.returnTo == "/partials/upload-part"
+      if req.session.returnTo == "/partials/notification"
         res.redirect "/#/"
       else if req.session.returnTo == "/documents"
         res.redirect "/#/dashboard"
