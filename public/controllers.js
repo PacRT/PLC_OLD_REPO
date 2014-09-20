@@ -16,7 +16,7 @@ angular
 
             // route for the home page
             .when('/', {
-                templateUrl : 'partials/upload-part',
+                templateUrl : 'partials/notification',
                 controller  : 'TestController'
             })
 
