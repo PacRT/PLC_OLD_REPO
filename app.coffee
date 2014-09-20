@@ -172,7 +172,15 @@ app.post "/login", (req, res, next) ->
       console.log "info.message #{info.message}"
       return res.redirect("/#/loginfailure")
     console.log "User: %j", user
-    return res.redirect '/#/inactiveResponse' if user.status == "inactive"
+    if user.status == "inactive"
+      req.session.messages = "Hello #{user.name}! Your account is not active yet. Most likely due to heavy load. Bear with us we will notify soon once we can accommodate you."
+      return res.redirect '/#/inactiveResponse'
+    else if user.status == "deactivated"
+      req.session.messages = "Hello #{user.name}! Your account has been deactivated. If it was not you who did it please contact us"
+      return res.redirect '/#/inactiveResponse'
+    else if user.status == "suspended"
+      req.session.messages == "Hello #{user.name}! Your account has been temporarily suspended and undergoing an investigation."
+      return res.redirect '/#/inactiveResponse'
     req.logIn user, (err) ->
       return next(err)  if err
       console.log "req.session.returnTo #{req.session.returnTo}"

@@ -250,6 +250,13 @@
       }
       console.log("User: %j", user);
       if (user.status === "inactive") {
+        req.session.messages = "Hello " + user.name + "! Your account is not active yet. Most likely due to heavy load. Bear with us we will notify soon once we can accommodate you.";
+        return res.redirect('/#/inactiveResponse');
+      } else if (user.status === "deactivated") {
+        req.session.messages = "Hello " + user.name + "! Your account has been deactivated. If it was not you who did it please contact us";
+        return res.redirect('/#/inactiveResponse');
+      } else if (user.status === "suspended") {
+        req.session.messages === ("Hello " + user.name + "! Your account has been temporarily suspended and undergoing an investigation.");
         return res.redirect('/#/inactiveResponse');
       }
       req.logIn(user, function(err) {
