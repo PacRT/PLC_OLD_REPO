@@ -101,38 +101,23 @@ app.get "/about", (req, res) ->
   return
 
 app.get "/partials/about", (req, res) ->
-  res.render "partials/about",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/about", {user: req.user, message: req.session.messages}
   return
 
 app.get "/register", (req, res) ->
-  res.render "partials/register",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/register", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/register", (req, res) ->
-  res.render "partials/register",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/register", {user: req.user, message: req.session.messages}
   return
 
 app.get "/loginfailure", (req, res) ->
-  res.render "partials/loginfailure",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/loginfailure", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/loginfailure", (req, res) ->
-  res.render "partials/loginfailure",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/loginfailure", {user: req.user, message: req.session.messages}
   return
 
 
@@ -161,24 +146,15 @@ app.get "/partials/registrationError", (req, res) ->
   return
 
 app.get "/dashboard", ensureAuthenticated, (req, res) ->
-  res.render "partials/dashboard",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/dashboard", {user: req.user, message: req.session.messages}
   return
 
 app.get "/invite", ensureAuthenticated, (req, res) ->
-  res.render "partials/invite",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/invite", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/invite", (req, res) ->
-  res.render "partials/invite",
-    user: req.user
-    message: req.session.messages
-
+  res.render "partials/invite", {user: req.user, message: req.session.messages}
   return
 
 
@@ -188,10 +164,7 @@ app.get "/messages", (req, res) ->
 app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
   filename = req.params.filename
   return unless filename # might want to change this
-  res.render "partials/#{filename}",
-    user: req.user
-    message:req.session.messages
-
+  res.render "partials/#{filename}", {user: req.user, message: req.session.messages}
   return
 
 app.all "/upload/**", ensureAuthenticated, ops.upload
