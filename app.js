@@ -277,11 +277,13 @@
     console.log("Registering user's password (hehe dont keep it long here): " + (req.param("password")));
     console.log("Registering user's email: " + (req.param("email")));
     return User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", function(error, resp) {
+      var errorStr;
       console.log("/register - error " + error);
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
-        req.session.messages = "Error: " + (error.substring(error.lastIndexOf(':::') + 3));
+        errorStr = error.toString();
+        req.session.messages = "Error: " + (errorStr.substring(errorStr.lastIndexOf(':::') + 3));
         return res.redirect('/#/registrationError');
       }
     });
