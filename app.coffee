@@ -137,15 +137,11 @@ app.get "/partials/loginfailure", (req, res) ->
 
 
 app.get "/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse",
-    user: req.user
-    message: req.session.messages
+  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/partials/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse",
-    user: req.user
-    message: req.session.messages
+  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
   return
 
 app.get "/inactiveResponse", (req, res) ->
@@ -228,7 +224,7 @@ app.post "/register", (req, res, next) ->
   console.log "Registering user: #{req.param("username")}"
   console.log "Registering user's password (hehe dont keep it long here): #{req.param("password")}"
   console.log "Registering user's email: #{req.param("email")}"
-  User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", (error) ->
+  User.registerUser(req.param("name"), req.param("username"), req.param("password"), req.param("email"), "inactive", (error, resp) ->
     console.log "/register - error #{error}"
     unless error
       res.redirect '/#/registrationResponse'

@@ -27,11 +27,11 @@ exports.registerUser = (name, username, password, email, status, fn) ->
       client.eval data, 0, "#{username}", "#{email}", "#{password}", "#{name}", "#{status}", (error, resp) ->
         unless error
           client.publish "RegReqConfEmail", "{\"name\" : \"#{name}\", \"username\": \"#{username}\", \"email\": \"#{email}\", \"status\" : \"#{status}\" }"
-          console.log resp
-          return
+          console.log "Resp: #{resp}"
+          fn(error, resp)
         else
           console.log "Error error: #{error}"
-          fn(error)
+          fn(error, resp)
     else
       console.log "Error err: #{err}"
       console.log "#{process.cwd()}"
