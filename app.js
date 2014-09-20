@@ -281,7 +281,7 @@
       if (!error) {
         return res.redirect('/#/registrationResponse');
       } else {
-        req.session.messages = "Error: " + error;
+        req.session.messages = "Error: " + (error.substring(error.lastIndexOf(':::') + 3));
         return res.redirect('/#/registrationError');
       }
     });

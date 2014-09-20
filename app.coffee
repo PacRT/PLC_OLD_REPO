@@ -229,7 +229,7 @@ app.post "/register", (req, res, next) ->
     unless error
       res.redirect '/#/registrationResponse'
     else
-      req.session.messages = "Error: #{error}"
+      req.session.messages = "Error: #{error.substring(error.lastIndexOf(':::')+3)}"
       res.redirect '/#/registrationError'
   )
   #res.redirect '/#/registrationResponse'

@@ -15,9 +15,9 @@
 local uid = redis.call('INCR', "global:getNextUserId")
 
 local unamecheck_uid = redis.call('GET', "username:" ..ARGV[1].. ":uid")
-if unamecheck_uid then error("Username Exists") end
+if unamecheck_uid then error(":::Username already exists") end
 local emailcheck_uid = redis.call('GET', "email:" ..ARGV[2].. ":uid")
-if emailcheck_uid then error("Email already registered") end
+if emailcheck_uid then error(":::Email already registered with anothe user name.. yours?") end
 redis.call('SET', "uid:" ..uid.. ":username", ARGV[1]) -- ARGV[1] is username
 redis.call('SET', "username:" ..ARGV[1].. ":uid", uid)
 redis.call('SET', "uid:" ..uid.. ":email", ARGV[2]) -- ARGV[2] is email
