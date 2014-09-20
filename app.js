@@ -256,7 +256,7 @@
         req.session.messages = "Hello " + user.name + "! Your account has been deactivated. If it was not you who did it please contact us";
         return res.redirect('/#/inactiveResponse');
       } else if (user.status === "suspended") {
-        req.session.messages === ("Hello " + user.name + "! Your account has been temporarily suspended and undergoing an investigation.");
+        req.session.messages = "Hello " + user.name + "! Your account has been temporarily suspended and undergoing an investigation.";
         return res.redirect('/#/inactiveResponse');
       }
       req.logIn(user, function(err) {
