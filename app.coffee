@@ -80,7 +80,6 @@ getuser = (req, res) ->
     return 'notdefined'
 
 app.get "/", (req, res) ->
-  console.log("called ........ app.get '/' ")
   res.render "main", { user: req.user, name: getuser(req, res) }
 
 app.get "/contact", (req, res) ->
