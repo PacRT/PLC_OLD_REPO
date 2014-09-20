@@ -137,11 +137,15 @@ app.get "/partials/loginfailure", (req, res) ->
 
 
 app.get "/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
+  res.render "partials/registrationResponse",
+    user: req.user
+    message: req.session.messages
   return
 
 app.get "/partials/registrationResponse", (req, res) ->
-  res.render "partials/registrationResponse", {user: req.user, message: req.session.messages}
+  res.render "partials/registrationResponse",
+    user: req.user
+    message: req.session.messages
   return
 
 app.get "/inactiveResponse", (req, res) ->
@@ -158,7 +162,6 @@ app.get "/registrationError", (req, res) ->
 
 app.get "/partials/registrationError", (req, res) ->
   res.render "partials/registrationError", {user: req.user, message: req.session.messages}
-
   return
 
 app.get "/dashboard", ensureAuthenticated, (req, res) ->
