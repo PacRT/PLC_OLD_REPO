@@ -223,10 +223,6 @@
     });
   });
 
-  app.get("/messages", function(req, res) {
-    return res.send(req.session.messages);
-  });
-
   app.get("/partials/:filename", ensureAuthenticated, function(req, res) {
     var filename;
     filename = req.params.filename;

@@ -80,9 +80,7 @@ getuser = (req, res) ->
     return 'notdefined'
 
 app.get "/", (req, res) ->
-  res.render "main",
-    user: req.user
-    name: getuser(req, res)
+  res.render "main", { user: req.user, name: getuser(req, res) }
 
 app.get "/contact", (req, res) ->
   res.render "main",
@@ -156,10 +154,6 @@ app.get "/invite", ensureAuthenticated, (req, res) ->
 app.get "/partials/invite", (req, res) ->
   res.render "partials/invite", {user: req.user, message: req.session.messages}
   return
-
-
-app.get "/messages", (req, res) ->
-  res.send(req.session.messages)
 
 app.get "/partials/:filename", ensureAuthenticated, (req, res) ->
   filename = req.params.filename
