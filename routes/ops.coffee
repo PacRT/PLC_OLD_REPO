@@ -128,7 +128,7 @@ exports.fileServiceMask = (req, res, err) ->
       unless error
         console.log "fileServiceMask(): Error: #{error}"
         console.log "fileServiceMask(): Response: #{response}"
-        console.log "fileServiceMask(): Body: #{body}"
+        #console.log "fileServiceMask(): Body: #{body}"
         response.pipe res
       else
         console.log "fileServiceMask(): Error: #{error}"

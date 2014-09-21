@@ -170,7 +170,6 @@
         if (!error) {
           console.log("fileServiceMask(): Error: " + error);
           console.log("fileServiceMask(): Response: " + response);
-          console.log("fileServiceMask(): Body: " + body);
           return response.pipe(res);
         } else {
           return console.log("fileServiceMask(): Error: " + error);
