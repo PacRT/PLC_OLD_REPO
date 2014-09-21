@@ -124,7 +124,7 @@ exports.getdocuments2 = (req, res, err) ->
 exports.fileServiceMask = (req, res, err) ->
   console.log "fileServiceMask(): Err: #{err}"
   unless req.session.fids.indexOf(req.params.fid) is -1
-    reqobj "http://#{req.params.vs}:#{req.params.prt}/#{req.params.fid}", (error, response, body) ->
+    request "http://#{req.params.vs}:#{req.params.prt}/#{req.params.fid}", (error, response, body) ->
       unless error
         console.log "fileServiceMask(): Error: #{error}"
         console.log "fileServiceMask(): Response: #{response}"

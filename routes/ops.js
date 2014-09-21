@@ -166,7 +166,7 @@
   exports.fileServiceMask = function(req, res, err) {
     console.log("fileServiceMask(): Err: " + err);
     if (req.session.fids.indexOf(req.params.fid) !== -1) {
-      return reqobj("http://" + req.params.vs + ":" + req.params.prt + "/" + req.params.fid, function(error, response, body) {
+      return request("http://" + req.params.vs + ":" + req.params.prt + "/" + req.params.fid, function(error, response, body) {
         if (!error) {
           console.log("fileServiceMask(): Error: " + error);
           console.log("fileServiceMask(): Response: " + response);
