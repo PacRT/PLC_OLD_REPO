@@ -164,8 +164,20 @@
   };
 
   exports.fileServiceMask = function(req, res, err) {
+    console.log("fileServiceMask(): Err: " + err);
     if (req.session.fids.indexOf(req.params.fid) !== -1) {
-      return request.get("http://" + req.params.vs + ":" + req.params.prt + "/" + req.params.fid).pipe(res);
+      return reqobj("http://" + req.params.vs + ":" + req.params.prt + "/" + req.params.fid, function(error, response, body) {
+        if (!error) {
+          console.log("fileServiceMask(): Error: " + error);
+          console.log("fileServiceMask(): Response: " + response);
+          console.log("fileServiceMask(): Body: " + body);
+          return response.pipe(res);
+        } else {
+          return console.log("fileServiceMask(): Error: " + error);
+        }
+      });
+    } else {
+      return console.log("fileServiceMask(): Wrong file id");
     }
   };
 
