@@ -117,43 +117,34 @@ Refresh <button class="glyphicon glyphicon-refresh" ng-click="loadDocs()">.</but
 </div>
     <div class="row">
         <div class="col-md-9" style="margin-bottom: 40px; color: silver; font-style: italic">
-            <table>
-                <div ng-repeat="doc in documents">
-                    <tr>
-                        <td>
-                            <span ng-switch="doc.substring(doc.lastIndexOf('.')).toLowerCase()">
-                                <span ng-switch-when=".jpg">
-                                    <img ng-src="{{doc}}" width="100%" height="100%"/>
-                                </span>
-                                <span ng-switch-when=".jpeg">
-                                    <img ng-src="{{doc}}" width="100%" height="100%"/>
-                                </span>
-                                <span ng-switch-when=".png">
-                                    <img ng-src="{{doc}}" width="100%" height="100%"/>
-                                </span>
+            <div ng-repeat="doc in documents">
+                <span ng-switch="doc.substring(doc.lastIndexOf('.')).toLowerCase()">
+                    <span ng-switch-when=".jpg">
+                        <img ng-src="{{doc}}" width="100%" height="100%"/>
+                    </span>
+                    <span ng-switch-when=".jpeg">
+                        <img ng-src="{{doc}}" width="100%" height="100%"/>
+                    </span>
+                    <span ng-switch-when=".png">
+                        <img ng-src="{{doc}}" width="100%" height="100%"/>
+                    </span>
 
-                                <span ng-switch-when=".pdf">
-                                    <object type="application/pdf" width="100%" height="200%" ng-attr-data="{{doc}}"/>
-                                </span>
-                                <span ng-switch-default>
-                                    <object width="100%" height="200%" ng-attr-data="{{doc}}"/>
-                                </span>
-                            </span>
-                        </td>
-                        <td>
-                            <span>
-                            More information about {{doc.substring(0, doc.lastIndexOf('.'))}}
-                            </span>
-                        </td>
-                    </tr>
-                    <!-- <span ng-if="doc.substring(doc.lastIndexOf('.')) == '.jpg'">
-                        <img ng-src="{{doc}}"/>
-                    </span> -->
+                    <span ng-switch-when=".pdf">
+                        <object type="application/pdf" width="100%" height="200%" ng-attr-data="{{doc}}"/>
+                    </span>
+                    <span ng-switch-default>
+                        <object width="100%" height="200%" ng-attr-data="{{doc}}"/>
+                    </span>
+                </span>
 
-                    <!-- <object width="500" height="400" ng-attr-data="{{doc}}"/> -->
-                </div>
-            </table>
-
+                <span>
+                More information about {{doc.substring(0, doc.lastIndexOf('.'))}}
+                </span>
+                <!-- <span ng-if="doc.substring(doc.lastIndexOf('.')) == '.jpg'">
+                    <img ng-src="{{doc}}"/>
+                </span> -->
+                <!-- <object width="500" height="400" ng-attr-data="{{doc}}"/> -->
+            </div>
         </div>
 </div>
 
