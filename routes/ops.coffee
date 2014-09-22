@@ -123,7 +123,11 @@ exports.getdocuments2 = (req, res, err) ->
 
 exports.fileServiceMask = (req, res, err) ->
   #console.log "fileServiceMask(): Err: #{err}"
+  console.log "fileServiceMask() got called"
+  console.log("FIDS:::::::::" + req.session.fids)
+  console.log("FID: "+ fiid) for fiid in req.session.fids
   unless req.session.fids.indexOf(req.params.fid) is -1
+    console.log "fileServiceMask(): fid is present in fids"
     reqobj = request "http://#{req.params.vs}:#{req.params.prt}/#{req.params.fid}", (error, response, body) ->
       unless error
         console.log "fileServiceMask(): Error: #{error}"
@@ -135,7 +139,7 @@ exports.fileServiceMask = (req, res, err) ->
     #request.get("http://#{req.params.vs}:#{req.params.prt}/#{req.params.fid}").pipe res
     reqobj.pipe res
   else
-    console.log "fileServiceMask(): Wrong file id"
+    console.log "fileServiceMask(): fid is present NOT present in fids"
 
 fullzscan = (indexname, fn) ->
   result = []
