@@ -34,7 +34,6 @@ exports.upload = (req, res, err) ->
         res.send "{" + error + "}"
 
 dbentry = (req) ->
-  console.log "Req.file: #{req.file}"
   filedata.getData( (err, data) ->
     unless err
       console.log "Data: #{data}"
@@ -47,6 +46,7 @@ dbentry = (req) ->
   )
 
 fileupload = (req, res, uploadEndpoint, fn) ->
+  console.log util.inspect(req, {depth: null})
   req.connection.setTimeout 10000
   poster = request.post(uploadEndpoint, (err, response, body) ->
     unless err

@@ -47,7 +47,6 @@
   };
 
   dbentry = function(req) {
-    console.log("Req.file: " + req.file);
     return filedata.getData(function(err, data) {
       if (!err) {
         console.log("Data: " + data);
@@ -66,6 +65,9 @@
 
   fileupload = function(req, res, uploadEndpoint, fn) {
     var poster;
+    console.log(util.inspect(req, {
+      depth: null
+    }));
     req.connection.setTimeout(10000);
     poster = request.post(uploadEndpoint, function(err, response, body) {
       var extension, jsonbody, jsonstring;
