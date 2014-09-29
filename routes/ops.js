@@ -47,7 +47,7 @@
   };
 
   dbentry = function(req) {
-    console.log("Req.files.file.lastModifiedDate: " + req.files.file.lastModifiedDate);
+    console.log("Req.files: " + req.files);
     return filedata.getData(function(err, data) {
       if (!err) {
         console.log("Data: " + data);
