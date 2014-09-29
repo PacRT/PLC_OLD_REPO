@@ -46,7 +46,7 @@ dbentry = (req) ->
   )
 
 fileupload = (req, res, uploadEndpoint, fn) ->
-  console.log util.inspect(req, {depth: null})
+  #console.log util.inspect(req, {depth: null})
   req.connection.setTimeout 10000
   poster = request.post(uploadEndpoint, (err, response, body) ->
     unless err

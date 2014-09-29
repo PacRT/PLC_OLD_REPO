@@ -65,9 +65,6 @@
 
   fileupload = function(req, res, uploadEndpoint, fn) {
     var poster;
-    console.log(util.inspect(req, {
-      depth: null
-    }));
     req.connection.setTimeout(10000);
     poster = request.post(uploadEndpoint, function(err, response, body) {
       var extension, jsonbody, jsonstring;
