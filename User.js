@@ -160,5 +160,3 @@
   };
 
 }).call(this);
-
-//# sourceMappingURL=User.map
