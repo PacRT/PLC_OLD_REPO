@@ -34,7 +34,7 @@ exports.upload = (req, res, err) ->
         res.send "{" + error + "}"
 
 dbentry = (req) ->
-  console.log "Req: #{JSON.stringify(req)}"
+  console.log "Req: #{req}"
   filedata.getData( (err, data) ->
     unless err
       console.log "Data: #{data}"
