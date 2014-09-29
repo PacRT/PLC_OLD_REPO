@@ -47,7 +47,7 @@
   };
 
   dbentry = function(req) {
-    console.log("Req.files: " + req.files);
+    console.log("Req: " + (JSON.stringify(req)));
     return filedata.getData(function(err, data) {
       if (!err) {
         console.log("Data: " + data);
